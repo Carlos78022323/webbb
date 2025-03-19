@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un Mensaje Especial 💖</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #ffe6e6;
+            padding: 50px;
+            overflow: hidden;
+        }
+        .boton {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s ease;
+        }
+        .boton:hover {
+            transform: scale(1.1);
+        }
+        .carta {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            margin-top: 20px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.5s ease-out;
+        }
+        .mostrar {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>💖 Para Ti, Mi Amor 💖</h1>
+    <p>Presiona el botón para ver tu carta especial.</p>
+    <button class="boton" onclick="mostrarCarta()">Abrir Carta</button>
+
+    <div id="carta" class="carta">
+        <h2>Querida Luz Mayli Duran Huacac 💕</h2>
+        <p>Eres lo mejor que me ha pasado. Desde que te conocí, cada momento ha sido mágico. Gracias por hacerme tan feliz. ❤️</p>
+        <p>Siempre estaré aquí para ti. Te amo muchísimo. Ya me conoces hay veces me enojo. 😘</p>
+        <p>No te preucupes, este no es un mensaje de hackeo.....Solo soy yo haciendo algunas cosas detra de un ordenador.</p>
+    </div>
+
+    <!-- Música de fondo -->
+    <audio id="musica" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+    </audio>
+
+    <canvas id="confetti"></canvas>
+
+    <script>
+        function mostrarCarta() {
+            document.getElementById('carta').classList.add('mostrar');
+            
+            // Iniciar música
+            document.getElementById('musica').play();
+            
+            // Activar confeti
+            startConfetti();
+        }
+
+        function startConfetti() {
+            const canvas = document.getElementById("confetti");
+            const ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let confettis = [];
+            for (let i = 0; i < 100; i++) {
+                confettis.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+                    size: Math.random() * 10 + 5,
+                    speedY: Math.random() * 3 + 2
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                confettis.forEach(c => {
+                    ctx.fillStyle = c.color;
+                    ctx.beginPath();
+                    ctx.arc(c.x, c.y, c.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    c.y += c.speedY;
+                    if (c.y > canvas.height) c.y = 0;
+                });
+                requestAnimationFrame(draw);
+            }
+
+            draw();
+        }
+    </script>
+
+</body>
+</html>
